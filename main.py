@@ -41,7 +41,7 @@ class Application(QtWidgets.QDialog):
         self.threads = []
         for index in range(self.count):
             print(index)
-            self.client.append(rtsp.Client(rtsp_server_uri='rtsp://jewell:Jennydog14@192.168.0.45:554/stream1'))
+            self.client.append(rtsp.Client(rtsp_server_uri='rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream2'))
             # self.client.append(rtsp.Client(rtsp_server_uri='rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov'))
         self.labels = [self.ui.cam1, self.ui.cam2, self.ui.cam3, self.ui.cam4, self.ui.cam5, self.ui.cam6, self.ui.cam7, self.ui.cam8]
 
