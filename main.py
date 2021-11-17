@@ -45,9 +45,16 @@ class Application(QtWidgets.QDialog):
         self.label = [self.ui.cam1, self.ui.cam2, self.ui.cam3, self.ui.cam4, self.ui.cam5, self.ui.cam6, self.ui.cam7, self.ui.cam8]
         self.capture.append(cv2.VideoCapture('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream1')
         self.capture.append(cv2.VideoCapture('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream2')
+        self.capture.append(cv2.VideoCapture('rtsp://demo:demo@ipvmdemo.dyndns.org:5541/onvif-media/media.amp?profile=profile_1_h264&sessiontimeout=60&streamtype=unicast')
+        self.capture.append(cv2.VideoCapture('rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov')
+        self.capture.append(cv2.VideoCapture('rtsp://freja.hiof.no:1935/rtplive/_definst_/hessdalen02.stream')
+        self.capture.append(cv2.VideoCapture('rtsp://freja.hiof.no:1935/rtplive/_definst_/hessdalen03.stream')
+        self.capture.append(cv2.VideoCapture('rtsp://mpv.cdn3.bigCDN.com:554/bigCDN/mp4:bigbuckbunnyiphone_400.mp4')
+        self.capture.append(cv2.VideoCapture('rtsp://mm2.pcslab.com/mm/7h800.mp4')
+        
     def readyPlay(self):
         for index in range(self.count):
-            self.capture.append(cv2.VideoCapture('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream1'))
+            # self.capture.append(cv2.VideoCapture('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream1'))
             self.threads.append(QThread())
             self.workers.append(RenderCamera(self.capture[index], self.label[index]))
  
