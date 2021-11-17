@@ -16,16 +16,18 @@ class RenderCamera(QObject):
         super().__init__()
         self.label = label
         self.capture = capture
-        
+
     def run(self):
         while self.capture.isOpened():
             ret, frame = self.capture.read()
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             h, w, channel = frame.shape
             bytesPerLine = channel * w
-            qImg = QImage(frame.data, w, h, bytesPerLine, QImage.Format_RGB888).scaled(self.label.width(), self.label.height())
+            #qImg = QImage(frame.data, w, h, bytesPerLine, QImage.Format_RGB888).scaled(self.label.width() - 15, self.label.height() - 15)
+            #print(self.label.width())
+            qImg = QImage(frame.data, w, h, bytesPerLine, QImage.Format_RGB888).scaledToHeight(self.label.height() - 10)
             self.label.setPixmap(QPixmap(qImg))
-            time.sleep(40)
+            time.sleep(400)
 
         self.finished.emit()
 
@@ -38,16 +40,17 @@ class Application(QtWidgets.QDialog):
         self.ui.groupBox.setLayout(self.ui.horizontalLayout)
         self.workers = []
         self.threads = []
-        self.count = 8
+        self.count = 1
         self.capture = []
         self.label = [self.ui.cam1, self.ui.cam2, self.ui.cam3, self.ui.cam4, self.ui.cam5, self.ui.cam6, self.ui.cam7, self.ui.cam8]
-
+        self.capture.append(cv2.VideoCapture('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream1')
+        self.capture.append(cv2.VideoCapture('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream2')
     def readyPlay(self):
         for index in range(self.count):
             self.capture.append(cv2.VideoCapture('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream1'))
             self.threads.append(QThread())
             self.workers.append(RenderCamera(self.capture[index], self.label[index]))
-            
+ 
             self.workers[index].moveToThread(self.threads[index])
             self.threads[index].started.connect(self.workers[index].run)
             self.workers[index].finished.connect(self.workers[index].deleteLater)
@@ -56,7 +59,7 @@ class Application(QtWidgets.QDialog):
 
             # self.mediaplayer.append(self.instance.media_player_new())
             # self.media.append(self.instance.media_new('rtsp://jewell:Jennydog14@jewellfamily.ddns.net/stream1'))
-        
+ 
             # self.mediaplayer[index].set_media(self.media[index])
             # self.media[index].parse()
             # print(self.media[index].get_meta(0))
